@@ -12,8 +12,12 @@ class CreateAccountScreen extends StatefulWidget {
 }
 
 class _CreateAccountScreenState extends State<CreateAccountScreen> {
+  // bool button
+
   final _firstNameTextEditingController = TextEditingController();
   final _lastNameTextEditingController = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
