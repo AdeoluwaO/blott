@@ -75,6 +75,7 @@ class _InAppWebViewState extends State<InAppWebView> {
         ),
         foregroundColor: AppColors.white,
         backgroundColor: AppColors.prupleBlack,
+        centerTitle: true,
       ),
       body: _buildWidget(),
       floatingActionButton: urlHasError
