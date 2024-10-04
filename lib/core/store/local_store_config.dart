@@ -20,7 +20,6 @@ class LocalStorage {
 
   storeBool({required String key, required bool? val}) async {
     await initializeLocalStorage();
-    print('SAVING BOOL VALUE $val');
     final response = await _sharedPreferences?.setBool(key, val ?? false);
     return response;
   }

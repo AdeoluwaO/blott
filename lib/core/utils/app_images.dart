@@ -5,4 +5,5 @@ class AppImages {
   /*PNGS*/
 
   /*ANIMATIONS*/
+  static const loading = 'assets/animations/news_loading.json';
 }

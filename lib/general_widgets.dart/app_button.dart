@@ -1,11 +1,10 @@
-import 'package:blott/core/utils/app_colors.dart';
 import 'package:blott/core/utils/index.dart';
 import 'package:blott/general_widgets.dart/app_text.dart';
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({
-    Key? key,
+    super.key,
     this.color,
     this.textColor,
     this.width,
@@ -24,7 +23,7 @@ class AppButton extends StatelessWidget {
     this.suffixWidget,
     this.noRadius = false,
     this.paddingSelf,
-  }) : super(key: key);
+  });
   final Color? color, textColor;
   final TextStyle? textStyle;
   final String? text;
@@ -37,10 +36,6 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool hasFocus = FocusScope.of(context).hasFocus;
-    final theme = Theme.of(context);
-    final size = MediaQuery.sizeOf(context);
-    final brightness = Theme.of(context).brightness;
-    bool isLightMode = brightness == Brightness.light;
 
     return GestureDetector(
       onTap: hasError

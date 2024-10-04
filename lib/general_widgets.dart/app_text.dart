@@ -13,6 +13,7 @@ class AppText extends StatelessWidget {
       this.height,
       this.width,
       this.constraints,
+      this.maxLines,
       });
   final String text;
   final bool enabled;
@@ -21,6 +22,7 @@ class AppText extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final TextOverflow? overflow;
   final double? height,width;
+  final int? maxLines;
   final BoxConstraints? constraints;
   
 
@@ -37,6 +39,7 @@ class AppText extends StatelessWidget {
           style: style ?? AppTextStyle.bodyMedium,
           textAlign: textAlign,
           overflow: overflow,
+          maxLines: maxLines,
         ),
       ),
     );

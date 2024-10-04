@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:intl/intl.dart';
+
 class HelperFunctions {
   static bool isAndroid() {
     return Platform.isAndroid;
@@ -26,6 +28,12 @@ class HelperFunctions {
       }
     });
   }
+
+  static String formatDate({required DateTime dateTime, String? dateFormat}) {
+    final format = DateFormat(dateFormat ?? 'dd/MM/yyyy');
+    return format.format(dateTime);
+  }
+
 
   static String formatTimeToDigit({required int time, int digitCount = 2}) {
     return time.toString().padLeft(digitCount, '0');
