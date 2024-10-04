@@ -1,4 +1,3 @@
-import 'package:blott/core/helpers/extensions.dart';
 import 'package:blott/core/routers/route_generator.dart';
 import 'package:blott/core/store/profile_store/profile_store.dart';
 import 'package:blott/core/utils/index.dart';
@@ -29,36 +28,24 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         automaticallyImplyLeading: false,
         centerTitle: false,
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 24),
-        child: Container(
-          height: 56,
-          width: 56,
-          decoration: BoxDecoration(
-            color: buttonEnabled
-                ? AppColors.blue
-                : AppColors.blue.withOpacity(0.08),
-            borderRadius: BorderRadius.circular(27),
-          ),
-          child: Icon(
-            Icons.chevron_right_rounded,
-            size: 40,
-            color: AppColors.white,
-          ),
-        ).addTapGesture(
-          onTap: () async {
-            if (buttonEnabled) {
-              final navigator = Navigator.of(context); // STORE THE CONTEXT BEFORE THE ASYNC GAP
-              final user = User(
-                firstName: _firstNameTextEditingController.text,
-                lastName: _lastNameTextEditingController.text,
-                isLoggedIn: true,
-              );
-              await UserStore.storeProfile(user);
-              navigator.pushNamed(RouteGenerator.permissions);
-            }
-          },
-        ),
+      floatingActionButton: AppIconButton(
+        icon: Icons.chevron_right_rounded,
+        height: 56,
+        width: 56,
+        borderRadius: BorderRadius.circular(27),
+        paddingSelf: const EdgeInsets.only(bottom: 24),
+        buttonEnabled: buttonEnabled,
+        onTap: () async {
+          final navigator =
+              Navigator.of(context); // STORE THE CONTEXT BEFORE THE ASYNC GAP
+          final user = User(
+            firstName: _firstNameTextEditingController.text,
+            lastName: _lastNameTextEditingController.text,
+            isLoggedIn: true,
+          );
+          await UserStore.storeProfile(user);
+          navigator.pushReplacementNamed(RouteGenerator.permissions);
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       body: Form(

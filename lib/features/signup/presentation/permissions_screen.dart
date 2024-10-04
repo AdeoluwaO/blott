@@ -37,13 +37,14 @@ class PermissionsScreen extends StatelessWidget {
             onTap: () async {
               final navigator = Navigator.of(
                   context); // STORE THE CONTEXT BEFORE THE ASYNC GAP
-                await flutterLocalNotificationsPlugin
-                    .resolvePlatformSpecificImplementation<
-                        AndroidFlutterLocalNotificationsPlugin>()
-                    ?.requestNotificationsPermission();
-                navigator.pushNamed(RouteGenerator.news);
-              // await Permission.notification.request();
-              // navigator.pushNamed(RouteGenerator.news);
+              await flutterLocalNotificationsPlugin
+                  .resolvePlatformSpecificImplementation<
+                      AndroidFlutterLocalNotificationsPlugin>()
+                  ?.requestNotificationsPermission();
+              navigator.pushNamedAndRemoveUntil(
+                RouteGenerator.news,
+                (route) => false,
+              );
             },
           ),
         ],

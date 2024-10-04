@@ -5,12 +5,15 @@ import 'package:blott/core/routers/route_exports.dart';
 class RouteGenerator {
   const RouteGenerator._();
 
+  static const auth = "auth_screen";
   static const permissions = "permissions_screen";
   static const news = "news_screen";
   static const inAppWebview = "in_app_webview";
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case auth:
+        return trasnsitionRouter(screenWidget: const CreateAccountScreen());
       case permissions:
         return trasnsitionRouter(screenWidget: const PermissionsScreen());
       case news:

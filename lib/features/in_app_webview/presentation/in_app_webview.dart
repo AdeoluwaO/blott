@@ -1,4 +1,3 @@
-import 'package:blott/core/helpers/extensions.dart';
 import 'package:blott/core/utils/index.dart';
 import 'package:blott/features/in_app_webview/domain/index.dart';
 import 'package:blott/general_widgets.dart/index.dart';
@@ -79,26 +78,16 @@ class _InAppWebViewState extends State<InAppWebView> {
       ),
       body: _buildWidget(),
       floatingActionButton: urlHasError
-          ? Padding(
-              padding: const EdgeInsets.only(bottom: 24),
-              child: Container(
-                height: 56,
-                width: 56,
-                decoration: BoxDecoration(
-                  color: AppColors.blue,
-                  borderRadius: BorderRadius.circular(27),
-                ),
-                child: Icon(
-                  Icons.public_rounded,
-                  size: 40,
-                  color: AppColors.white,
-                ),
-              ).addTapGesture(
-                onTap: () async {
-                  launchUrl(Uri.parse(widget.item.url!),
-                      mode: LaunchMode.externalApplication);
-                },
-              ),
+          ? AppIconButton(
+              icon: Icons.public_rounded,
+              height: 56,
+              width: 56,
+              borderRadius: BorderRadius.circular(27),
+              paddingSelf: const EdgeInsets.only(bottom: 24),
+              onTap: () {
+                launchUrl(Uri.parse(widget.item.url!),
+                    mode: LaunchMode.externalApplication);
+              },
             )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,

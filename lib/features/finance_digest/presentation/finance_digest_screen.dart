@@ -36,7 +36,7 @@ class _FinanceDigestScreenState extends ConsumerState<FinanceDigestScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final digestState = ref.watch(generalDigestProvider);
+    final newsDigestData = ref.watch(generalDigestProvider);
     return AppScaffold(
       appBar: AppBar(
         title: AppText(
@@ -46,48 +46,64 @@ class _FinanceDigestScreenState extends ConsumerState<FinanceDigestScreen> {
         automaticallyImplyLeading: false,
         centerTitle: false,
         backgroundColor: AppColors.prupleBlack,
-        // toolbarHeight: 181,
       ),
       applySafeArea: false,
       padding: const EdgeInsets.symmetric(horizontal: 16),
       backgroundColor: AppColors.primary,
-      body: _buildWidget(digestState),
+      body: _buildWidget(newsDigestData),
     );
   }
 
-  Widget _buildWidget(FinanceDigestNotifierState digestState) {
-    switch (digestState.loadState) {
+  Widget _buildWidget(FinanceDigestNotifierState newsDigestData) {
+    switch (newsDigestData.loadState) {
       case null:
         return const AppLoadingIndicator();
       case LoadState.loading:
         return const AppLoadingIndicator();
       case LoadState.success:
-        return AppListViewBuilder(
-          itemCount: digestState.digestNews?.length ?? 0,
-          itemBuilder: (context, index) {
-            final digest = digestState.digestNews?[index];
-            return NewsItemWidget(
-              source: digest?.source ?? '',
-              image: digest?.image ?? '',
-              headline: digest?.headline ?? '',
-              date: digest?.datetime ?? DateTime.now(),
-              onTap: () {
-                Navigator.pushNamed(context, RouteGenerator.inAppWebview,
-                    arguments: InAppWebViewModel(
-                        title: digest?.source, url: digest?.url));
+        if ((newsDigestData.digestNews?.length ?? 0) > 0) {
+          return RefreshIndicator(
+            onRefresh: () async {
+              ref.read(generalDigestProvider.notifier).getGeneralDigestNews();
+            },
+            child: AppListViewBuilder(
+              itemCount: newsDigestData.digestNews?.length ?? 0,
+              itemBuilder: (context, index) {
+                final digest = newsDigestData.digestNews?[index];
+                return NewsItemWidget(
+                  source: digest?.source ?? '',
+                  image: digest?.image ?? '',
+                  headline: digest?.headline ?? '',
+                  date: digest?.datetime ?? DateTime.now(),
+                  onTap: () {
+                    Navigator.pushNamed(
+                      context,
+                      RouteGenerator.inAppWebview,
+                      arguments: InAppWebViewModel(
+                        title: digest?.source,
+                        url: digest?.url,
+                      ),
+                    );
+                  },
+                );
               },
-            );
-          },
-        );
+            ),
+          );
+        } else {
+          return AppErrorIndicator(
+            errorMessaage: "Something went wrong. Please try again later.",
+            buttonTitle: 'Retry',
+            onTapTryAgain: () {
+              ref.read(generalDigestProvider.notifier).getGeneralDigestNews();
+            },
+          );
+        }
       case LoadState.error:
         return AppErrorIndicator(
           onTapTryAgain: () {
             ref.read(generalDigestProvider.notifier).getGeneralDigestNews();
           },
         );
-      case LoadState.loadmore:
-      case LoadState.none:
-        return const AppLoadingIndicator();
       default:
         return const AppLoadingIndicator();
     }
